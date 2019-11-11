@@ -1,1 +1,315 @@
-<!DOCTYPE html><html lang="en"><head>	<meta charset="UTF-8">	<title>Covea Insurance</title>		<!--CSS Imports-->	<link rel="stylesheet" href="css/onsenui.css">	<link rel="stylesheet" href="css/onsen-css-components.css">	<link rel="stylesheet" href="style.css">	<link rel="stylesheet" href="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css">		<!--JavaScript Imports-->	<script src="js/onsenui.js"></script>	<script src="index.js"></script>	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	<script src="http://malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>	</head><body>	<!--Naviation Framework-->	<ons-navigator id="appNavigator" swipeable swipe-target-width="80px">		<ons-page>			<ons-splitter id="appSplitter">				<ons-splitter-side id="sidemenu" page="sidemenu.html" swipeable side="left" collapse="" width="260px"></ons-splitter-side>				<ons-splitter-content page="tabbar.html"></ons-splitter-content>			</ons-splitter>		</ons-page>	</ons-navigator>		<!--Tabbar Navigation Content-->	<template id="tabbar.html">		<ons-page id="tabbar-page">			<ons-toolbar>				<div class="center">Home</div>				<div class="left">					<ons-toolbar-button onclick="fn.toggleMenu()">						<ons-icon icon="ion-navicon, material:md-menu"></ons-icon>					</ons-toolbar-button>				</div>			</ons-toolbar>			<ons-tabbar swipeable id="appTabbar" position="auto">				<ons-tab label="Home" icon="ion-home" page="home.html" active></ons-tab>				<ons-tab label="Policies" icon="ion-edit" page="policies.html"></ons-tab>				<ons-tab label="Claims" icon="ion-film-marker" page="claims.html"></ons-tab>			</ons-tabbar>			<!--I don't know what this script does-->			<script>				ons.getScriptPage().addEventListener('prechange', function(event) {					if (event.target.matches('#appTabbar')) {						event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');					}				});			</script>		</ons-page>	</template>		<!--Side Menu Content-->	<template id="sidemenu.html">		<ons-page>			<ons-list-title>Covea Insurance</ons-list-title>			<ons-list>				<ons-list-item onclick="fn.loadView(0)">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="ion-home, material:md-home"></ons-icon>					</div>					<div class="center">						Home					</div>				</ons-list-item>				<ons-list-item onclick="fn.loadView(1)">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="ion-edit, material:md-edit"></ons-icon>					</div>					<div class="center">						Forms					</div>				</ons-list-item>				<ons-list-item onclick="fn.loadView(2)">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="ion-film-marker, material: md-movie-alt"></ons-icon>					</div>					<div class="center">						Animations					</div>				</ons-list-item>			</ons-list>			<script>			  ons.getScriptPage().onInit = function() {				// Set ons-splitter-side animation				this.parentElement.setAttribute('animation', ons.platform.isAndroid() ? 'overlay' : 'reveal');				};			</script>			<style>				.profile-pic {				width: 200px;				background-color: #fff;				margin: 20px auto 10px;				border: 1px solid #999;				border-radius: 4px;				}				.profile-pic > img {				display: block;				max-width: 100%;				}				ons-list-item {				color: #444;				}			</style>		</ons-page>	</template>		<!--Alex and Jaike's Code Bit-->	<template id="home.html">		<ons-page>			<!--<ons-card onclick="fn.pushPage({'id': 'About_Covea.html', 'title': 'About Covea'})">-->			<ons-card>				<a "class="twitter-timeline" href="https://twitter.com/CoveaInsplc?ref_src=twsrc%5Etfw">Tweets by CoveaInsplc</a> 				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>				<script>					(function($){						$(window).load(function(){						/* initialize scrollbar */						$("#twitter-widget-holder").mCustomScrollbar({							theme:"dark-3",							scrollButtons:{enable:true}						});						/* insert twitter widget js in window load fn */						!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");					});				  })(jQuery);				</script>			</ons-card>			<style>				.intro {					text-align: center;					padding: 0 20px;					margin-top: 40px;				}				ons-card {					cursor: pointer;					color: #333;				}				.card__title,				.card--material__title {					font-size: 20px;				}			</style>		</ons-page>	</template>		<!--Jaike's Javascript Jaunt-->	<template id="policies.html">		<ons-page id="policies-page">			<style>				.intro {				text-align: center;				padding: 0 20px;				margin-top: 40px;				}				ons-card {				cursor: pointer;				color: #333;				}				.card__title,				.card--material__title {				font-size: 20px;				}			</style>			<script>				text = ""				fetch('https://api.thesmokinggnu.net/api/policies')				.then(response => response.json())				.then(data=>{				console.log(data)				// Work with JSON data here				for (policy of data.policies){					text += "ID: "+policy.id+" Name: "+policy.policyname + "<br> Description: "+policy.policydetails+"<br><br>";					ons.createElement(`						<ons-card onclick="fn.pushPage({'id': 'policy_read.html', 'title': policy.policyname})">							<div class="title">policy.policyname</div>							<div class="content">policy.policydetails</div>						</ons-card>					`)				}				})				.catch(err=>{// Do something for an error here				})				document.getElementById("policies.html").style.display = "block";			</script>		</ons-page>	</template>		<!--Numaan and Sameeh's Code Bit-->	<template id="animations.html">		<ons-page>					</ons-page>	</template>		<!--All the other stuff-->	<template id="About_Covea.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center"></div>			</ons-toolbar>			<p>				Covea offer a wide range of home and commercial insurance backed by great service and one of Europe's leading mutual insurance groups.			</p>			<ons-pull-hook id="pull-hook" threshold-height="120px">				<ons-icon id="pull-hook-icon" size="22px" class="pull-hook-content" icon="fa-arrow-down"></ons-icon>			</ons-pull-hook>			<ons-list id="kitten-list">				<ons-list-header>Pull to refresh</ons-list-header>			</ons-list>			<script>				ons.getScriptPage().onInit = function () {					this.querySelector('ons-toolbar div.center').textContent = this.data.title;					var pullHook = document.getElementById('pull-hook');					var icon = document.getElementById('pull-hook-icon');					pullHook.addEventListener('changestate', function (event) {						switch (event.state) {							case 'initial':								icon.setAttribute('icon', 'fa-arrow-down');								icon.removeAttribute('rotate');								icon.removeAttribute('spin');								break;							case 'preaction':								icon.setAttribute('icon', 'fa-arrow-down');								icon.setAttribute('rotate', '180');								icon.removeAttribute('spin');								break;							case 'action':								icon.setAttribute('icon', 'fa-spinner');								icon.removeAttribute('rotate');								icon.setAttribute('spin', true);								break;						}					});					var getRandomName = function () {						const names = ['Oscar', 'Max', 'Tiger', 'Sam', 'Misty', 'Simba', 'Coco', 'Chloe', 'Lucy', 'Missy'];						return names[Math.floor(Math.random() * names.length)];					};					var getRandomUrl = function () {						const width = 40 + Math.floor(20 * Math.random());						const height = 40 + Math.floor(20 * Math.random());						return `https://placekitten.com/g/${width}/${height}`;					};					var getRandomKitten = function () {						return {							name: getRandomName(),							url: getRandomUrl()						};					};					var getRandomData = function () {						const data = [];						for (var i = 0; i < 8; i++) {							data.push(getRandomKitten());						}						return data;					};					var createKitten = function (kitten) {						return ons.createElement(`							<ons-list-item>								<div class="left">									<img class="list-item__thumbnail" src="${kitten.url}">								</div>								<div class="center">${kitten.name}</div>							</ons-list-item>						`						);					};					var kittens = getRandomData();					for (kitty of kittens) {						var kitten = createKitten(kitty);						document.getElementById('kitten-list').appendChild(kitten);					};					pullHook.onAction = function (done) {						setTimeout(function() {							document.getElementById('kitten-list').appendChild(createKitten(getRandomKitten()));							done();						}, 400);					}				};			</script>			<style>				.pull-hook-content {				color: #666;				transition: transform .25s ease-in-out;				}			</style>		</ons-page>	</template>	<!--Numaan and Sameeh's Code Bit-->	<template id="claims.html">		<ons-page>											</ons-page>	</template>	<template id="buttons.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center"></div>			</ons-toolbar>			<section style="margin: 16px">				<ons-button class="button-margin">Normal</ons-button>				<ons-button modifier="quiet" class="button-margin">Quiet</ons-button>				<ons-button modifier="outline" class="button-margin">Outline</ons-button>				<ons-button modifier="cta" class="button-margin">Call to action</ons-button>				<ons-button modifier="light" class="button-margin">Light</ons-button>				<ons-button modifier="large" class="button-margin">Large</ons-button>			</section>			<section style="margin: 16px">				<ons-button class="button-margin" disabled>Normal</ons-button>				<ons-button modifier="quiet" class="button-margin" disabled>Quiet</ons-button>				<ons-button modifier="outline" class="button-margin" disabled>Outline</ons-button>				<ons-button modifier="cta" class="button-margin" disabled>Call to action</ons-button>				<ons-button modifier="light" class="button-margin" disabled>Light</ons-button>				<ons-button modifier="large" class="button-margin" disabled>Large</ons-button>			</section>			<ons-fab position="top right">				<ons-icon icon="md-face"></ons-icon>			</ons-fab>			<ons-fab position="bottom left" disabled>				<ons-icon icon="md-car"></ons-icon>			</ons-fab>			<ons-speed-dial position="bottom right" direction="up" :open.sync="spdOpen">				<ons-fab>					<ons-icon icon="md-share"></ons-icon>				</ons-fab>				<ons-speed-dial-item onclick="ons.notification.confirm(`Share on Twitter?`)">					<ons-icon icon="md-twitter"></ons-icon>				</ons-speed-dial-item>				<ons-speed-dial-item onclick="ons.notification.confirm(`Share on Facebook?`)">					<ons-icon icon="md-facebook"></ons-icon>				</ons-speed-dial-item>				<ons-speed-dial-item onclick="ons.notification.confirm(`Share on Google+`)">					<ons-icon icon="md-google-plus"></ons-icon>				</ons-speed-dial-item>			</ons-speed-dial>			<script>				ons.getScriptPage().onInit = function () {					this.querySelector('ons-toolbar div.center').textContent = this.data.title;				}			</script>			<style>				.button-margin {					margin: 6px 0;				}			</style>		</ons-page>	</template>	<template id="carousel.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center"></div>			</ons-toolbar>			<ons-carousel id="carousel" fullscreen swipeable auto-scroll overscrollable initial-index="0">				<ons-carousel-item class="carousel-item" style="background-color: gray">					<div class="color-tag">Gray</div>				</ons-carousel-item>				<ons-carousel-item class="carousel-item" style="background-color: #085078">					<div class="color-tag">Blue</div>				</ons-carousel-item>				<ons-carousel-item class="carousel-item" style="background-color: #373B44">					<div class="color-tag">Dark</div>				</ons-carousel-item>				<ons-carousel-item class="carousel-item" style="background-color: #D38312">					<div class="color-tag">Orange</div>				</ons-carousel-item>			</ons-carousel>			<div class="dots">				<span id="dot0" class="dot" onclick="fn.swipe(this)">					&#9679;				</span>				<span id="dot1" class="dot" onclick="fn.swipe(this)">					&#9675;				</span>				<span id="dot2" class="dot" onclick="fn.swipe(this)">					&#9675;				</span>				<span id="dot3" class="dot" onclick="fn.swipe(this)">					&#9675;				</span>			</div>			<script>				ons.getScriptPage().onInit = function () {					this.querySelector('ons-toolbar div.center').textContent = this.data.title;					const carousel = document.getElementById('carousel');					carousel.addEventListener('postchange', function () {						var index = carousel.getActiveIndex();						const dots = document.querySelectorAll('.dot');						for (dot of dots) {							dot.innerHTML = dot.id === 'dot' + index ? '&#9679;' : '&#9675;';						}					});					window.fn.swipe = function (target) {						carousel.setActiveIndex(Number(target.id.slice(-1)));					}				}			</script>			<style>				.carousel-item {					display: flex;					justify-content: space-around;					align-items: center;				}				.color-tag {					color: #fff;					font-size: 48px;					font-weight: bold;					text-transform: uppercase;				}				.dots {					text-align: center;					font-size: 30px;					color: #fff;					position: absolute;					bottom: 40px;					left: 0;					right: 0;				}				.dots > span {					cursor: pointer;				}			</style>		</ons-page>	</template>	<template id="loadMore.html">		<!-- Load more items on scroll bottom -->		<ons-page id="load-more-page" on-infinite-scroll="fn.loadMore">			<p class="intro">				Useful for loading more items when the scroll reaches the bottom of the page, typically after an asynchronous API call.<br><br>			</p>			<ons-list id="list-node"></ons-list>			<div class="after-list">				<ons-icon icon="fa-spinner" size="26px" spin></ons-icon>			</div>			<script>				ons.getScriptPage().onInit = function () {					var listNode = document.getElementById('list-node');					var createListItem = function (i) {						return ons.createElement(`<ons-list-item>Item #${i}</ons-list-item>`);					}					for (var i = 0; i < 30; i++) {						listNode.appendChild(createListItem(i));					}					window.fn.loadMore = function (done) {						setTimeout(function() {							const listLength = listNode.children.length;								for (var i = 0; i < 10; i++) {									listNode.appendChild(createListItem(listLength + i));								}							done();						}, 600)					}				}			</script>			<style>				.after-list {				margin: 20px;				text-align: center;				}			</style>		</ons-page>	</template>	<template id="lazyRepeat.html">		<!-- Lazy load thousands of items -->		<ons-page id="lazy-repeat-page">			<p class="intro">				Automatically unloads items that are not visible and loads new ones. Useful when the list contains thousands of items.<br><br>			</p>			<ons-list>				<ons-lazy-repeat id="infinite-list"></ons-lazy-repeat>			</ons-list>			<script>				ons.getScriptPage().onInit = function () {					var infiniteList = document.getElementById('infinite-list');					infiniteList.delegate = {						createItemContent: function (i) {							return ons.createElement(`<ons-list-item>Item #${i}</ons-list-item>`);						},						countItems: function () {							return 3000;						}					};					infiniteList.refresh();				}			</script>			<style>				.intro {					text-align: center;					padding: 0 20px;					margin-top: 40px;				}			</style>		</ons-page>	</template>	<template id="infiniteScroll.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center"></div>			</ons-toolbar>			<ons-tabbar position="auto">				<ons-tab label="Load More" page="loadMore.html"></ons-tab>				<ons-tab label="Lazy Repeat" page="lazyRepeat.html" active></ons-tab>			</ons-tabbar>			<script>				ons.getScriptPage().onInit = function () {					this.querySelector('ons-toolbar div.center').textContent = this.data.title;				}			</script>		</ons-page>	</template>	<template id="progress.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center"></div>			</ons-toolbar>			<ons-progress-bar id="progress-value" class="progressStyle" value="0"></ons-progress-bar>			<section style="margin: 40px 16px">				<p id="progress-status">					Progress: 0%				</p>				<p>					<ons-progress-bar class="progressStyle" value="20"></ons-progress-bar>				</p>				<p>					<ons-progress-bar class="progressStyle" value="40" secondary-value="80"></ons-progress-bar>				</p>				<p>					<ons-progress-bar class="progressStyle" indeterminate></ons-progress-bar>				</p>				<div style="text-align: center; margin: 40px; color: #666">					<p>						<ons-progress-circular class="progressStyle" value="20"></ons-progress-circular>						<ons-progress-circular class="progressStyle" value="40" secondary-value="80"></ons-progress-circular>						<ons-progress-circular class="progressStyle" indeterminate></ons-progress-circular>					</p>					<p>						<ons-icon icon="ion-load-a" spin size="30px"></ons-icon>						<ons-icon icon="ion-load-b" spin size="30px"></ons-icon>						<ons-icon icon="ion-load-c" spin size="30px"></ons-icon>						<ons-icon icon="ion-load-d" spin size="30px"></ons-icon>					</p>					<p>						<ons-icon icon="fa-spinner" spin size="26px"></ons-icon>						<ons-icon icon="circle-o-notch" spin size="26px"></ons-icon>					</p>					<p>						<ons-icon icon="md-spinner" spin size="30px"></ons-icon>					</p>				</div>				<p>					<ons-button modifier="large">						<ons-icon icon="ion-load-c" spin size="26px"></ons-icon>					</ons-button>					<br><br>					<ons-button modifier="large" disabled>						<ons-icon icon="ion-load-c" spin size="26px"></ons-icon>					</ons-button>				</p>			</section>			<script>				ons.getScriptPage().onInit = function () {					this.querySelector('ons-toolbar div.center').textContent = this.data.title;					if (!ons.platform.isAndroid()) {						const progressStyle = document.querySelectorAll('.progressStyle');						for (progress of progressStyle) {							progress.hasAttribute('modifier') ?							progress.setAttribute('modifier', progress.getAttribute('modifier') + ' ios') :							progress.setAttribute('modifier', 'ios');						}					}					var progressStatus = document.getElementById('progress-status');					var progressValue = document.getElementById('progress-value');					var intervalID = 0;					intervalID = setInterval(function() {						if (progressValue.value === 100) {							clearInterval(intervalID);							return;						}						progressValue.value++;						progressStatus.innerHTML = `Progress: ${progressValue.value}%`;					}, 40);				}			</script>			<style>				/* 'ios' modifier */				.progress-bar--ios__primary,				.progress-bar--ios.progress-bar--indeterminate::before,				.progress-bar--ios.progress-bar--indeterminate::after {					background-color: #4282cc				}				.progress-bar--ios__secondary {					background-color: #87b6eb;				}				.progress-circular--ios__primary {					stroke: #4282cc				}				.progress-circular--ios__secondary {					stroke: #87b6eb;				}			</style>		</ons-page>	</template>	<template id="transition.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Animations</ons-back-button>				</div>				<div class="center"></div>			</ons-toolbar>			<p style="text-align: center">				Use the VOnsBackButton			</p>			<script>				ons.getScriptPage().onInit = function () {					this.querySelector('ons-toolbar div.center').textContent = this.data.title;				}			</script>		</ons-page>	</template>	<style>		ons-splitter-side[animation=overlay] {			border-left: 1px solid #bbb;		}	</style></body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Covea Insurance</title>
+	
+	<!--CSS Imports-->
+	<link rel="stylesheet" href="css/onsenui.css">
+	<link rel="stylesheet" href="css/onsen-css-components.css">
+	<link rel="stylesheet" href="style.css">
+	
+	<!--JavaScript Imports-->
+	<script src="js/onsenui.js"></script>
+	<script src="index.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="js/app-body.js"></script>
+	
+</head>
+<body>
+	<!--Naviation Framework-->
+	<ons-navigator id="appNavigator" swipeable swipe-target-width="80px">
+		<ons-page>
+			<ons-splitter id="appSplitter">
+				<ons-splitter-side id="sidemenu" page="sidemenu.html" swipeable side="left" collapse="" width="260px"></ons-splitter-side>
+				<ons-splitter-content page="tabbar.html"></ons-splitter-content>
+			</ons-splitter>
+		</ons-page>
+	</ons-navigator>
+	
+	<!--Tabbar Navigation Content-->
+	<template id="tabbar.html">
+		<ons-page id="tabbar-page">
+			<ons-toolbar>
+				<div class="center">Home</div>
+				<div class="left">
+					<ons-toolbar-button onclick="fn.toggleMenu()">
+						<ons-icon icon="md-navicon, material:md-menu"></ons-icon>
+					</ons-toolbar-button>
+				</div>
+			</ons-toolbar>
+			<ons-tabbar swipeable id="appTabbar" position="auto">
+				<ons-tab label="Home" icon="md-home" page="home.html" active></ons-tab>
+				<ons-tab label="Policies" icon="md-book" page="policies.html"></ons-tab>
+				<ons-tab label="Claims" icon="md-assignment" page="claims.html"></ons-tab>
+			</ons-tabbar>
+			<!--I don't know what this script does-->
+			<script>
+				ons.getScriptPage().addEventListener('prechange', function(event) {
+					if (event.target.matches('#appTabbar')) {
+						event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');
+					}
+				});
+			</script>
+		</ons-page>
+	</template>
+	
+	<!--Side Menu Content-->
+	<template id="sidemenu.html">
+		<ons-page>
+			<ons-list-title>Covea Insurance</ons-list-title>
+			<ons-list>
+				<ons-list-item onclick="fn.loadView(0)">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-home, material:md-home"></ons-icon>
+					</div>
+					<div class="center">
+						Home
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.loadView(1)">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-book, material:md-book"></ons-icon>
+					</div>
+					<div class="center">
+						Policies
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.loadView(2)">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-assignment, material: md-assignment"></ons-icon>
+					</div>
+					<div class="center">
+						Claims
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.pushPage({'id': 'help.html', 'title': 'Help'})">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-help, material: md-help"></ons-icon>
+					</div>
+					<div class="center">
+						Help
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.pushPage({'id': 'contact.html', 'title': 'Contact Us'})">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-feedback, material: md-feedback"></ons-icon>
+					</div>
+					<div class="center">
+						Contact Us
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.pushPage({'id': 'about.html', 'title': 'About'})">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-info, material: md-info"></ons-icon>
+					</div>
+					<div class="center">
+						About
+					</div>
+				</ons-list-item>
+			</ons-list>
+			<script>
+			  ons.getScriptPage().onInit = function() {
+				// Set ons-splitter-side animation
+				this.parentElement.setAttribute('animation', ons.platform.isAndroid() ? 'overlay' : 'reveal');
+				};
+			</script>
+			<style>
+				.profile-pic {
+				width: 200px;
+				background-color: #fff;
+				margin: 20px auto 10px;
+				border: 1px solid #999;
+				border-radius: 4px;
+				}
+				.profile-pic > img {
+				display: block;
+				max-width: 100%;
+				}
+				ons-list-item {
+				color: #444;
+				}
+			</style>
+		</ons-page>
+	</template>
+	
+	<!--Alex and Jaike's Code Bit-->
+	<template id="home.html">
+		<ons-page>
+			<ons-card>
+				<ons-icon fixed-width icon="md-info" material="md-info"></ons-icon>
+				No New Notifications
+			</ons-card>
+			<ons-card>
+				<a class="twitter-timeline" data-height="500" data-dnt="true" href="https://twitter.com/CoveaInsplc?ref_src=twsrc%5Etfw">Tweets by CoveaInsplc</a> 
+				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+			</ons-card>
+			<style>
+				.intro {
+					text-align: center;
+					padding: 0 20px;
+					margin-top: 40px;
+				}
+				ons-card {
+					cursor: pointer;
+					color: #333;
+				}
+				.card__title,
+				.card--material__title {
+					font-size: 20px;
+				}
+			</style>
+		</ons-page>
+	</template>
+	
+	<!--Jaike's Javascript Jaunt-->
+	<template id="policies.html">
+		<ons-page id="policies-page">
+			<style>
+				.intro {
+				text-align: center;
+				padding: 0 20px;
+				margin-top: 40px;
+				}
+				ons-card {
+				cursor: pointer;
+				color: #333;
+				}
+				.card__title,
+				.card--material__title {
+				font-size: 20px;
+				}
+			</style>
+			<script>
+				text = ""
+				fetch('https://api.thesmokinggnu.net/api/policies')
+				.then(response => response.json())
+				.then(data=>{
+				console.log(data)
+				// Work with JSON data here
+				for (policy of data.policies){
+					text += "ID: "+policy.id+" Name: "+policy.policyname + "<br> Description: "+policy.policydetails+"<br><br>";
+					ons.createElement(`
+						<ons-card onclick="fn.pushPage({'id': 'policy_read.html', 'title': policy.policyname})">
+							<div class="title">policy.policyname</div>
+							<div class="content">policy.policydetails</div>
+						</ons-card>
+					`)
+				}
+				})
+				.catch(err=>{// Do something for an error here
+				})
+				document.getElementById("policies.html").style.display = "block";
+			</script>
+		</ons-page>
+	</template>
+	
+	<!--Numaan and Sameeh's Code Bit-->
+	<template id="claims.html">
+		<ons-page id="claims.html">
+			<ons-card>
+				No Claims In Progress!
+			</ons-card>
+			<div style="padding:2%; align:center;">
+				<ons-button onclick="fn.pushPage({'id': 'newclaim.html', 'title': 'New Claim'})" id="claimbutton1" style="padding:3%; background-color:#ed313d">File New Claim</ons-button>
+			</div>
+		</ons-page>
+	</template>
+	
+	<!--All the other stuff-->
+	<template id="help.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">Help</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				Covea offer a wide range of home and commercial insurance backed by great service and one of Europe's leading mutual insurance groups.
+			</div>
+			<style>
+				.pull-hook-content {
+				color: #666;
+				transition: transform .25s ease-in-out;
+				}
+			</style>
+		</ons-page>
+	</template>
+	<template id="contact.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">Contact Us</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				Covea offer a wide range of home and commercial insurance backed by great service and one of Europe's leading mutual insurance groups.
+			</div>
+			<style>
+				.pull-hook-content {
+				color: #666;
+				transition: transform .25s ease-in-out;
+				}
+			</style>
+		</ons-page>
+	</template>
+	<template id="about.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">About</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				Covea offer a wide range of home and commercial insurance backed by great service and one of Europe's leading mutual insurance groups.
+			</div>
+			<style>
+				.pull-hook-content {
+				color: #666;
+				transition: transform .25s ease-in-out;
+				}
+			</style>
+		</ons-page>
+	</template>
+	
+	<!--New Claim Sequence-->  <!--Sameeh and Numaan-->
+	<template id="newclaim.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">File New Claim</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+			<p> What have you lost?</p>
+<div style="text-align: left; margin-top: 30px;">
+    <p>
+      <ons-input modifier="underbar" placeholder="Textbox" float></ons-input>
+    </p>
+</div>
+		<p> Where did you lose it?</p>
+<div style="text-align: left; margin-top: 30px;">
+    <p>
+      <ons-input modifier="underbar" placeholder="Textbox" float></ons-input>
+    </p>
+</div>
+		<p>What time did you lose it?</p>
+<div style="text-align: left; margin-top: 30px;">
+    <p>
+      <ons-input modifier="underbar" placeholder="12:00"></ons-input>
+    </p>
+</div>		
+			</div>
+			<style>
+				.pull-hook-content {
+				color: #666;
+				transition: transform .25s ease-in-out;
+				}
+			</style>
+		</ons-page>
+	</template>
+</body>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Log In</title>
+	
+	<!--CSS Imports-->
+	<link rel="stylesheet" href="css/onsenui.css">
+	<link rel="stylesheet" href="css/onsen-css-components.css">
+	<link rel="stylesheet" href="style.css">
+	
+	<!--JavaScript Imports-->
+	<script src="js/onsenui.js"></script>
+	<script src="index.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<script src="js/app-body.js"></script>
+	
+</head>
+<body>
+	<!--Naviation Framework-->
+	<ons-navigator id="appNavigator" swipeable swipe-target-width="80px">
+		<ons-page>
+			<ons-splitter id="appSplitter">
+				<div id="login">
+					Please Enter Your Credentials to Continue
+					<p style="padding:3%">
+						<ons-input type="number" id="username" modifier="underbar" placeholder="Policy Number" float></ons-input>
+					</p>
+					<ons-button onclick="fn.pushPage({'id': 'password.html', 'title': 'New Claim'})" id="continue" style="background-color:#ed313d">Continue</ons-button>
+				</div>
+				<style>
+					#login {
+						text-align: center;
+						margin-top: 50%;
+					}
+				</style>
+				<script>
+					ons.getScriptPage().onInit = function() {
+						// Set ons-splitter-side animation
+						this.parentElement.setAttribute('animation', ons.platform.isAndroid() ? 'overlay' : 'reveal');
+					};
+				</script>
+			</ons-splitter>
+		</ons-page>
+	</ons-navigator>
+	
+	<!--Sign in Page Content-->
+	<template id="password.html">
+		<ons-page>
+			<p style="padding:3%">
+				<ons-input type="password" id="password" modifier="underbar" placeholder="Password" float></ons-input>
+			</p>
+		</ons-page>
+	</template>
+</body>
