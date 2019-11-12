@@ -1,0 +1,12 @@
+.pull-hook-content {
+	color: #666;
+	transition: transform .25s ease-in-out;
+}
+#Claimssuccess1 {
+	position: absolute; 
+	left: 20%; 
+	right: 20%; 
+	bottom: 5%;
+	padding:3%; 
+	background-color:#ed313d;
+}

@@ -1,1 +1,512 @@
-<!DOCTYPE html><html lang="en"><head>	<meta charset="UTF-8">	<title>Covea Insurance</title>		<!--CSS Imports-->	<link rel="stylesheet" href="css/onsenui.css">	<link rel="stylesheet" href="css/onsen-css-components.css">	<!--<link rel="stylesheet" href="style.css">-->		<!--JavaScript Imports-->	<script src="js/onsenui.js"></script>	<script src="index.js"></script>	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>	</head><body>	<!--Naviation Framework-->	<ons-navigator id="appNavigator" swipeable swipe-target-width="80px">		<ons-page>			<ons-splitter id="appSplitter">				<ons-splitter-side id="sidemenu" page="sidemenu.html" swipeable side="left" collapse="" width="260px"></ons-splitter-side>				<ons-splitter-content page="tabbar.html"></ons-splitter-content>			</ons-splitter>		</ons-page>	</ons-navigator>		<!--Tabbar Navigation Content-->	<template id="tabbar.html">		<ons-page id="tabbar-page">			<ons-toolbar>				<div class="center">Home</div>				<div class="left">					<ons-toolbar-button onclick="fn.toggleMenu()">						<ons-icon icon="md-navicon, material:md-menu"></ons-icon>					</ons-toolbar-button>				</div>			</ons-toolbar>			<ons-tabbar swipeable id="appTabbar" position="auto">				<ons-tab label="Home" icon="md-home" page="home.html" active></ons-tab>				<ons-tab label="Policies" icon="md-book" page="policies.html"></ons-tab>				<ons-tab label="Claims" icon="md-assignment" page="claims.html"></ons-tab>			</ons-tabbar>			<!--I don't know what this script does-->			<script>				ons.getScriptPage().addEventListener('prechange', function(event) {					if (event.target.matches('#appTabbar')) {						event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');					}				});			</script>		</ons-page>	</template>		<!--Side Menu Content-->	<template id="sidemenu.html">		<ons-page>			<ons-list-title>Covea Insurance</ons-list-title>			<ons-list>				<ons-list-item onclick="fn.loadView(0)">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="md-home, material:md-home"></ons-icon>					</div>					<div class="center">						Home					</div>				</ons-list-item>				<ons-list-item onclick="fn.loadView(1)">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="md-book, material:md-book"></ons-icon>					</div>					<div class="center">						Policies					</div>				</ons-list-item>				<ons-list-item onclick="fn.loadView(2)">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="md-assignment, material: md-assignment"></ons-icon>					</div>					<div class="center">						Claims					</div>				</ons-list-item>				<ons-list-item onclick="fn.pushPage({'id': 'help.html', 'title': 'Help'})">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="md-help, material: md-help"></ons-icon>					</div>					<div class="center">						Help					</div>				</ons-list-item>				<ons-list-item onclick="fn.pushPage({'id': 'contact.html', 'title': 'Contact Us'})">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="md-feedback, material: md-feedback"></ons-icon>					</div>					<div class="center">						Contact Us					</div>				</ons-list-item>				<ons-list-item onclick="fn.pushPage({'id': 'about.html', 'title': 'About'})">					<div class="left">						<ons-icon fixed-width class="list-item__icon" icon="md-info, material: md-info"></ons-icon>					</div>					<div class="center">						About					</div>				</ons-list-item>			</ons-list>			<script>			  ons.getScriptPage().onInit = function() {				// Set ons-splitter-side animation				this.parentElement.setAttribute('animation', ons.platform.isAndroid() ? 'overlay' : 'reveal');				};			</script>			<style>				.profile-pic {				width: 200px;				background-color: #fff;				margin: 20px auto 10px;				border: 1px solid #999;				border-radius: 4px;				}				.profile-pic > img {				display: block;				max-width: 100%;				}				ons-list-item {				color: #444;				}			</style>		</ons-page>	</template>		<!--Alex and Jaike's Code Bit-->	<template id="home.html">		<ons-page>			<ons-card>				<ons-icon fixed-width icon="md-info" material="md-info"></ons-icon>				No New Notifications			</ons-card>			<ons-card>				<a class="twitter-timeline" data-height="500" data-dnt="true" href="https://twitter.com/CoveaInsplc?ref_src=twsrc%5Etfw">Tweets by CoveaInsplc</a> 				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>			</ons-card>			<style>				.intro {					text-align: center;					padding: 0 20px;					margin-top: 40px;				}				ons-card {					cursor: pointer;					color: #333;				}				.card__title,				.card--material__title {					font-size: 20px;				}			</style>		</ons-page>	</template>		<!--Jaike's Javascript Jaunt-->	<template id="policies.html">		<ons-page id="policies-page">			<style>				.intro {				text-align: center;				padding: 0 20px;				margin-top: 40px;				}				ons-card {				cursor: pointer;				color: #333;				}				.card__title,				.card--material__title {				font-size: 20px;				}			</style>			<script>				ons.ready(function() {					document.addEventListener('show', function(event) {						if (event.target.matches('#yourpage')) {							ons.notification.alert('Page is initiated.');							var jojo;							var insertnode1, insertnode2, insertnode3;							function cardGenerator() {								fetch('https://api.thesmokinggnu.net/api/policies')								.then(response => response.json())								.then(data=>{									console.log(data)									// Work with JSON data here									jojo = document.getElementById("policies.html");									for (policy of data.policies){										insertnode2 = document.createElement("DIV");										insertnode2.innerHTML = "<ons-card id='policycards' onclick='fn.pushPage({`id`: `policy_read.html`, `title`: `ID: "+policy.id+"`})'>"+policy.policyname+"</ons-card>"										jojo.appendChild(insertnode2);									}								})							}							cardGenerator();						}					})				}, false);				//<ons-card onclick='fn.pushPage({`id`: `policy_read.html`, `title`: `ID: "+policy.id+"`})'>"+policy.policyname+"</ons-card>			</script>		</ons-page>	</template>		<!--Numaan and Sameeh's Code Bit-->	<template id="claims.html">		<ons-page id="claims.html">			<ons-card>				No Claims In Progress!			</ons-card>			<div style="padding:2%; align:center;">				<ons-button onclick="fn.pushPage({'id': 'newclaim.html', 'title': 'New Claim'})" id="claimbutton1" style="padding:3%; background-color:#ed313d">File New Claim</ons-button>			</div>		</ons-page>	</template>		<!--All the other stuff-->	<template id="help.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center">Help</div>			</ons-toolbar>			<div style="padding: 5%;">				Covea offer a wide range of home and commercial insurance backed by great service and one of Europe's leading mutual insurance groups.			</div>			<style>				.pull-hook-content {				color: #666;				transition: transform .25s ease-in-out;				}			</style>		</ons-page>	</template>	<template id="contact.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center">Contact Us</div>			</ons-toolbar>			<div style="padding: 5%;">				Covea offer a wide range of home and commercial insurance backed by great service and one of Europe's leading mutual insurance groups.			</div>			<style>				.pull-hook-content {				color: #666;				transition: transform .25s ease-in-out;				}			</style>		</ons-page>	</template>	<template id="about.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center">About</div>			</ons-toolbar>			<div style="padding: 5%;">				Covea offer a wide range of home and commercial insurance backed by great service and one of Europe's leading mutual insurance groups.			</div>			<style>				.pull-hook-content {				color: #666;				transition: transform .25s ease-in-out;				}			</style>		</ons-page>	</template>		<!--New Claim Sequence-->  <!--Sameeh and Numaan-->	<template id="newclaim.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center">File New Claim</div>			</ons-toolbar>			<div style="padding: 5%;">			<p> What have you lost?</p>			<div style="text-align: left; margin-top: 30px;">				<p>					<ons-input id="lostitems" modifier="underbar" placeholder="Textbox"></ons-input>				</p>			</div>				<p> Where did you lose it?</p>			<div style="text-align: left; margin-top: 30px;">				<p>					<ons-input id="where" modifier="underbar" placeholder="Textbox"></ons-input>				</p>			</div>				<p>What time did you lose it?</p>			<div style="text-align: left; margin-top: 30px;">				<p>					<ons-input id="time" modifier="underbar" placeholder="12:00"></ons-input>				</p>			</div>					<p>Did you report it to the police?</p>				<ons-button onclick="">Yes</ons-button> <ons-button onclick="">No</ons-button>							<div style="text-align: left; margin-top: 30px;">				<p>					<ons-input id="lostitems" modifier="underbar" placeholder="Information"></ons-input>				</p>			</div>						<p><ons-button style="position: absolute; left: 20%; right: 20%; bottom: 5%;" onclick="fn.pushPage({'id': 'newclaim2.html', 'title': 'New Claim'})" id="claimbutton2" style="padding:3%; background-color:#ed313d">Continue</ons-button></p>			<style>				.pull-hook-content {				color: #666;				transition: transform .25s ease-in-out;				}			</style>		</ons-page>	</template>	<template id="newclaim2.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center">New claim</div>			</ons-toolbar>			<div style="padding: 5%;">				What was damaged?		<div style="text-align: left; margin-top: 30px;">				<p>					<ons-input id="where" modifier="underbar" placeholder="Textbox"></ons-input>				</p>		</div>			<p>Do you have an witnesses</p>			<ons-button onclick="">Yes</ons-button> <ons-button onclick="">No</ons-button>		<div style="text-align: left; margin-top: 30px;">				<p>					<ons-input id="lostitems" modifier="underbar" placeholder="Names"></ons-input>				</p>		</div>			<p>Do you have any photographic evidence?</p>			<ons-button onclick="">Yes</ons-button> <ons-button onclick="">No</ons-button>			<p><ons-button style="position: absolute; left: 20%; right: 20%; bottom: 5%;" onclick="fn.pushPage({'id': 'Claimssuccess.html', 'title': 'New Claim'})" id="Claimssuccess1" style="padding:3%; background-color:#ed313d">Continue</ons-button></p>			</div>			<style>				.pull-hook-content {				color: #666;				transition: transform .25s ease-in-out;				}			</style>		</ons-page>	</template>	<template id="Claimssuccess.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center">Successfull</div>			</ons-toolbar>			<div style="padding: 5%;">				Your Claim has sucessfully been submitted.				<p><ons-button style="position: absolute; left: 20%; right: 20%; bottom: 5%;" onclick="fn.pushPage({'id': 'appnavigator', 'title': 'Home'})" id="gohome1" style="padding:3%; background-color:#ed313d">Home</ons-button></p>			</div>			<style>				.pull-hook-content {				color: #666;				transition: transform .25s ease-in-out;				}			</style>		</ons-page>	</template>		</template>	<template id="Claimsunsuccess.html">		<ons-page>			<ons-toolbar>				<div class="left">					<ons-back-button>Home</ons-back-button>				</div>				<div class="center">Unsuccessfull</div>			</ons-toolbar>			<div style="padding: 5%;">				Your Claim has not been submitted.				<p><ons-button style="position: absolute; left: 20%; right: 20%; bottom: 5%;" onclick="fn.pushPage({'id': 'appnavigator', 'title': 'Home'})" id="gohome1" style="padding:3%; background-color:#ed313d">Home</ons-button></p>			</div>			<style>				.pull-hook-content {				color: #666;				transition: transform .25s ease-in-out;				}			</style>		</ons-page>	</template></body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Covea Insurance</title>
+	
+	<!--CSS Imports-->
+	<link rel="stylesheet" href="css/onsenui.css">
+	<link rel="stylesheet" href="css/onsen-css-components.css">
+	<link rel="stylesheet" href="style.css">
+	
+	<!--JavaScript Imports-->
+	<script src="js/onsenui.js"></script>
+	<script src="index.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	
+</head>
+<body>
+	<!--Naviation Framework-->
+	<ons-navigator id="appNavigator" swipeable swipe-target-width="80px">
+		<ons-page>
+			<ons-splitter id="appSplitter">
+				<ons-splitter-side id="sidemenu" page="sidemenu.html" swipeable side="left" collapse="" width="260px"></ons-splitter-side>
+				<ons-splitter-content page="tabbar.html"></ons-splitter-content>
+			</ons-splitter>
+		</ons-page>
+	</ons-navigator>
+	
+	<!--Tabbar Navigation Content-->
+	<template id="tabbar.html">
+		<ons-page id="tabbar-page">
+			<ons-toolbar>
+				<div class="center">Home</div>
+				<div class="left">
+					<ons-toolbar-button onclick="fn.toggleMenu()">
+						<ons-icon icon="md-navicon, material:md-menu"></ons-icon>
+					</ons-toolbar-button>
+				</div>
+			</ons-toolbar>
+			<ons-tabbar swipeable id="appTabbar" position="auto">
+				<ons-tab label="Home" icon="md-home" page="home.html" active></ons-tab>
+				<ons-tab label="Policies" icon="md-book" page="policies.html"></ons-tab>
+				<ons-tab label="Claims" icon="md-assignment" page="claims.html"></ons-tab>
+			</ons-tabbar>
+			<!--I don't know what this script does-->
+			<script>
+				ons.getScriptPage().addEventListener('prechange', function(event) {
+					if (event.target.matches('#appTabbar')) {
+						event.currentTarget.querySelector('ons-toolbar .center').innerHTML = event.tabItem.getAttribute('label');
+					}
+				});
+			</script>
+		</ons-page>
+	</template>
+	
+	<!--Side Menu Content-->
+	<template id="sidemenu.html">
+		<ons-page>
+			<ons-list-title>Covea Insurance</ons-list-title>
+			<ons-list>
+				<ons-list-item onclick="fn.loadView(0)">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-home, material:md-home"></ons-icon>
+					</div>
+					<div class="center">
+						Home
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.loadView(1)">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-book, material:md-book"></ons-icon>
+					</div>
+					<div class="center">
+						Policies
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.loadView(2)">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-assignment, material: md-assignment"></ons-icon>
+					</div>
+					<div class="center">
+						Claims
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.pushPage({'id': 'help.html', 'title': 'Help'})">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-help, material: md-help"></ons-icon>
+					</div>
+					<div class="center">
+						Help
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.pushPage({'id': 'contact.html', 'title': 'Contact Us'})">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-feedback, material: md-feedback"></ons-icon>
+					</div>
+					<div class="center">
+						Contact Us
+					</div>
+				</ons-list-item>
+				<ons-list-item onclick="fn.pushPage({'id': 'about.html', 'title': 'About'})">
+					<div class="left">
+						<ons-icon fixed-width class="list-item__icon" icon="md-info, material: md-info"></ons-icon>
+					</div>
+					<div class="center">
+						About
+					</div>
+				</ons-list-item>
+			</ons-list>
+			<script>
+			  ons.getScriptPage().onInit = function() {
+				// Set ons-splitter-side animation
+				this.parentElement.setAttribute('animation', ons.platform.isAndroid() ? 'overlay' : 'reveal');
+				};
+			</script>
+			<style>
+				.profile-pic {
+				width: 200px;
+				background-color: #fff;
+				margin: 20px auto 10px;
+				border: 1px solid #999;
+				border-radius: 4px;
+				}
+				.profile-pic > img {
+				display: block;
+				max-width: 100%;
+				}
+				ons-list-item {
+				color: #444;
+				}
+			</style>
+		</ons-page>
+	</template>
+	
+	<!--Alex and Jaike's Code Bit-->
+	<template id="home.html">
+		<ons-page>
+			<ons-card>
+				<ons-icon fixed-width icon="md-info" material="md-info"></ons-icon>
+				No New Notifications
+			</ons-card>
+			<ons-card>
+				<a class="twitter-timeline" data-height="500" data-dnt="true" href="https://twitter.com/CoveaInsplc?ref_src=twsrc%5Etfw">Tweets by CoveaInsplc</a> 
+				<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+			</ons-card>
+			<style>
+				.intro {
+					text-align: center;
+					padding: 0 20px;
+					margin-top: 40px;
+				}
+				ons-card {
+					cursor: pointer;
+					color: #333;
+				}
+				.card__title,
+				.card--material__title {
+					font-size: 20px;
+				}
+			</style>
+		</ons-page>
+	</template>
+	
+	<!--Jaike's Javascript Jaunt-->
+	<template id="policies.html">
+		<ons-page id="policies-page">
+			<style>
+				.intro {
+				text-align: center;
+				padding: 0 20px;
+				margin-top: 40px;
+				}
+				ons-card {
+				cursor: pointer;
+				color: #333;
+				z-index:-1 !important;
+				}
+				.card__title,
+				.card--material__title {
+				font-size: 20px;
+				}
+			</style>
+			<script>
+				//document.addEventListener('show', function(event) {
+					//if (event.target.matches('#yourpage')) {
+						//ons.notification.alert('Page is initiated.');
+						var jojo;
+						var insertnode1, insertnode2, insertnode3;
+						function cardGenerator() {
+							fetch('https://api.thesmokinggnu.net/api/policies')
+							.then(response => response.json())
+							.then(data=>{
+								console.log(data)
+								// Work with JSON data here
+								jojo = document.getElementById("policies.html");
+								for (policy of data.policies){
+									insertnode2 = document.createElement("DIV");
+									insertnode2.innerHTML = "<ons-card id='policycards' onclick='fn.pushPage({`id`: `policy_read.html`, `title`: `ID: "+policy.id+"`})'>"+policy.policyname+"</ons-card>"
+									jojo.appendChild(insertnode2);
+								}
+							})
+						}
+						cardGenerator();
+					//}
+				//})
+				//<ons-card onclick='fn.pushPage({`id`: `policy_read.html`, `title`: `ID: "+policy.id+"`})'>"+policy.policyname+"</ons-card>
+			</script>
+		</ons-page>
+	</template>
+	
+	<!--Numaan and Sameeh's Code Bit-->
+	<template id="claims.html">
+		<ons-page id="claims.html">
+			<ons-card>
+				No Claims In Progress!
+			</ons-card>
+			<div style="padding:2%; align:center;">
+				<ons-button onclick="fn.pushPage({'id': 'newclaim0.html', 'title': 'New Claim'})" id="claimbutton1" style="padding:3%; background-color:#ed313d">File New Claim</ons-button>
+			</div>
+		</ons-page>
+	</template>
+	
+	<!--All the other stuff-->
+	<template id="help.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">Help</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				If you are experiencing problems with this app, please use the contact us section to report this bug or leave a review on our Play Store/App Store page.
+			</div>
+			<style>
+				.pull-hook-content {
+				color: #666;
+				transition: transform .25s ease-in-out;
+				}
+			</style>
+		</ons-page>
+	</template>
+	<template id="contact.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">Contact Us</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				Telephone Number: 01422 331166
+				<br><br>
+				Email: 
+				<a href="mailto:covea@gmail.co.uk">Covea@gmail.co.uk</a>
+			</div>
+			<style>
+				.pull-hook-content {
+				color: #666;
+				transition: transform .25s ease-in-out;
+				}
+			</style>
+		</ons-page>
+	</template>
+	<template id="about.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">About</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				<img src="img/logo.png" style="width:100%"></img>
+				<div style="padding:3%;">
+					Within the UK we operate as Covéa Insurance offering commercial, motor, high net worth, property and protection insurance. Covéa Insurance provided over 2 million policyholders, making over £765 million in premiums in 2018. covea have been trading for over 60 years. 1,900 talented people across our 8 offices throughout the UK. At covea we have a executive team that has a lot of experience in our sector.
+				</div>
+			</div>
+			<style>
+				.pull-hook-content {
+				color: #666;
+				transition: transform .25s ease-in-out;
+				}
+			</style>
+		</ons-page>
+	</template>
+	
+	<!--New Claim Sequence-->  <!--Sameeh and Numaan-->
+	<template id="newclaim0.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left"><ons-back-button>Home</ons-back-button></div>
+				<div class="center">File New Claim</div>
+			</ons-toolbar>
+			<div style="padding:3%">
+				Please Select an Insurance Type to Claim On
+			</div>
+			<ons-list>
+				<ons-list-item tappable>
+					<label class="left">
+						<ons-radio name="insurance" input-id="radio-1" checked></ons-radio>
+					</label>
+					<label for="radio-1" class="center">
+						Home
+					</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+						<ons-radio name="insurance" input-id="radio-2"></ons-radio>
+					</label>
+					<label for="radio-2" class="center">
+						Vehicle
+					</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+						<ons-radio name="insurance" input-id="radio-3"></ons-radio>
+					</label>
+					<label for="radio-3" class="center">
+						Travel
+					</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+						<ons-radio name="insurance" input-id="radio-4"></ons-radio>
+					</label>
+					<label for="radio-4" class="center">
+						Life
+					</label>
+				</ons-list-item>
+				<ons-list-item tappable>
+					<label class="left">
+						<ons-radio name="insurance" input-id="radio-5"></ons-radio>
+					</label>
+					<label for="radio-5" class="center">
+						Pets
+					</label>
+				</ons-list-item>
+			</ons-list>
+			<div style="padding:3%">
+				<ons-button id="next0" onclick="verifyinput0()">Next</ons-button>
+			</div>
+		</ons-page>
+	</template>
+	
+	<!--Claims Tree-->
+	
+	<!--Home Path-->
+	<template id="newclaim1a.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left"><ons-back-button>Home</ons-back-button></div>
+				<div class="center">File New Claim</div>
+			</ons-toolbar>
+			<div style="padding: 3%;">
+				Please Give the Address of the Incident
+				<div style="padding:3%;">
+					<ons-input type="text" id="where" modifier="underbar" placeholder="Type Here"></ons-input>
+				</div>
+				What Was Destroyed? (Give approximate values for each item, if you can)
+				<div style="padding:3%;">
+					<ons-input type="text" id="what" modifier="underbar" placeholder="Type Here"></ons-input>
+				</div>
+				What Date Did the Incident Occur?
+				<div style="padding:3%;">
+					<ons-input type="date" id="time" modifier="underbar"></ons-input>
+				</div>	
+				Did the Police give you any information such as investigation IDs?
+				<div style="padding:3%;">
+					<ons-button onclick="show_police()">Yes</ons-button>
+					<ons-button onclick="hide_police()">No</ons-button>
+				</div>
+				<div style="padding:3%;">
+					<ons-input style="display:hide;" id="police" modifier="underbar" placeholder="Please Enter Investigation Details"></ons-input>
+				</div>
+			</div>
+			<ons-button onclick="validateinput_claims_a()" id="claimbutton2" style="padding:3%; background-color:#ed313d">Continue</ons-button>
+			<style>
+				.pull-hook-content {
+					color: #666;
+					transition: transform .25s ease-in-out;
+				}
+				.ons-button {
+					position: absolute; 
+					left: 20%; 
+					right: 20%; 
+					bottom: 5%;
+				}
+			</style>
+		</ons-page>
+	</template>
+	
+	<!--Vehicle Path-->
+	<template id="newclaim1b.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left"><ons-back-button>Home</ons-back-button></div>
+				<div class="center">File New Claim</div>
+			</ons-toolbar>
+			<div style="padding: 3%;">
+				Please Give the Address of the Incident:
+				<div style="padding:3%;">
+					<ons-input type="text" id="where" modifier="underbar" placeholder="Type Here"></ons-input>
+				</div>
+				If There Was Another Party Involved and You Have Their Information, Please Enter Below:
+				<div style="padding:3%;">
+					<ons-input type="text" id="what" modifier="underbar" placeholder="Type Here"></ons-input>
+				</div>
+				What Date Did the Incident Occur?
+				<div style="padding:3%;">
+					<ons-input type="date" id="time" modifier="underbar"></ons-input>
+				</div>	
+				Did the Police Give You Any Information Such as Investigation IDs?
+				<div style="padding:3%;">
+					<ons-button onclick="show_police()">Yes</ons-button>
+					<ons-button onclick="hide_police()">No</ons-button>
+				</div>
+				<div style="padding:3%;">
+					<ons-input style="display:hide;" id="police" modifier="underbar" placeholder="Please Enter Investigation Details"></ons-input>
+				</div>
+			</div>
+			<ons-button onclick="validateinput_claims_a()" id="claimbutton2" style="padding:3%; background-color:#ed313d">Continue</ons-button>
+			<style>
+				.pull-hook-content {
+					color: #666;
+					transition: transform .25s ease-in-out;
+				}
+				.ons-button {
+					position: absolute; 
+					left: 20%; 
+					right: 20%; 
+					bottom: 5%;
+				}
+			</style>
+		</ons-page>
+	</template>
+	
+	<!--Stage 2 of Claims Tree - Brining It Together-->
+	<template id="newclaim2.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">New claim</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				Please Give the Address of the Incident:
+				<div style="padding:3%;">
+					<ons-input type="text" id="where" modifier="underbar" placeholder="Type Here"></ons-input>
+				</div>
+				What Date Did the Incident Occur?
+				<div style="padding:3%;">
+					<ons-input type="date" id="time" modifier="underbar"></ons-input>
+				</div>
+				Please List Any Witnesses to the Incident, If Applicable:
+				<div style="padding:3%;">
+					<ons-input id="witnesses" modifier="underbar" placeholder="Type Here"></ons-input>
+				</div>
+				Please Upload Any Evidence Here:
+				<div style="padding:3%;">
+					<ons-input type="file"></ons-input>
+				</div>
+				<ons-button onclick="verifyinput1()" id="finalProcess">Continue</ons-button>
+			</div>
+		</ons-page>
+	</template>
+	<!--Success Screen-->
+	<template id="ClaimsSuccess.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">Successful</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				<img src="img/tick.png" style="width:100%"></img>
+				Your Claim has sucessfully been submitted.
+				<ons-button style="position: absolute; left: 20%; right: 20%; bottom: 5%;" onclick="appNavigator.resetToPage('tabbar.html')" id="gohome1" style="padding:3%; background-color:#ed313d">Home</ons-button>
+			</div>
+		</ons-page>
+	</template>
+	<!--Fail Screen-->
+	<template id="ClaimsUnsuccess.html">
+		<ons-page>
+			<ons-toolbar>
+				<div class="left">
+					<ons-back-button>Home</ons-back-button>
+				</div>
+				<div class="center">Unsuccessful</div>
+			</ons-toolbar>
+			<div style="padding: 5%;">
+				<img src="img/cross.png" style="width:100%"></img>
+				An Error Has Occured. Your Claim has not been submitted. Please try again later or check your network connection.
+				<p><ons-button style="position: absolute; left: 20%; right: 20%; bottom: 5%;" onclick="appNavigator.resetToPage('tabbar.html')" id="gohome1" style="padding:3%; background-color:#ed313d">Home</ons-button></p>
+			</div>
+		</ons-page>
+	</template>
+	<!--Alert Dialog Template-->
+	<template id="alert-dialog.html">
+		<ons-alert-dialog id="my-alert-dialog" modifier="rowfooter">
+			<div class="alert-dialog-title">Alert</div>
+			<div class="alert-dialog-content">
+				Please Enter in All Available Fields
+			</div>
+			<div class="alert-dialog-footer">
+				<ons-alert-dialog-button onclick="hideAlertDialog()">OK</ons-alert-dialog-button>
+			</div>
+		</ons-alert-dialog>
+	</template>
+</body>
