@@ -2,6 +2,37 @@
 	color: #666;
 	transition: transform .25s ease-in-out;
 }
+.button--material {
+	background-color: #ed313d;
+	padding: 3%;
+}
+.card__title,
+.card--material__title {
+	font-size: 20px;
+}
+.intro {
+	text-align: center;
+	padding: 0 20px;
+	margin-top: 40px;
+}
+.profile-pic {
+	width: 200px;
+	background-color: #fff;
+	margin: 20px auto 10px;
+	border: 1px solid #999;
+	border-radius: 4px;
+}
+.profile-pic > img {
+	display: block;
+	max-width: 100%;
+}
+#claimborder {
+	padding: 3%;
+}
+#claimitem {
+	padding: 5%;
+	width: 100%;
+}
 #Claimssuccess1 {
 	position: absolute; 
 	left: 20%; 
@@ -9,4 +40,12 @@
 	bottom: 5%;
 	padding:3%; 
 	background-color:#ed313d;
+}
+ons-card {
+	cursor: pointer;
+	color: #333;
+	z-index:-1 !important;
+}
+ons-list-item {
+	color: #444;
 }

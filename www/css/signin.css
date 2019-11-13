@@ -1,0 +1,13 @@
+.button--material {
+	background-color: #ed313d;
+	padding: 3%;
+}
+#password_entry {
+	padding: 3%;
+	margin-top: 50%;
+	text-align: center;
+}
+#login {
+	text-align: center;
+	margin-top: 50%;
+}
