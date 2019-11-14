@@ -128,7 +128,7 @@
 		<ons-page id="policies-page">
 			<div id="dropbox">
 				<script>
-					ons.notification.alert('ID: "policies-page" is initiated.');
+					//ons.notification.alert('ID: "policies-page" is initiated.');
 					var jojo = document.getElementById("dropbox");
 					var insertnode1, insertnode2, insertnode3;
 					function cardGenerator() {
@@ -139,7 +139,7 @@
 							// Work with JSON data here
 							for (policy of data.policies) {
 								insertnode2 = document.createElement("DIV");
-								insertnode2.innerHTML = "<ons-card id='policycards' onclick='fn.pushPage(`policy_read.html`)'>TEST</ons-card>";
+								insertnode2.innerHTML = "<ons-card id='policycards' onclick='fn.pushPage(`policy_read.html`)'>"+policy.id+"</ons-card>";
 								jojo.appendChild(insertnode2);
 							}
 						})

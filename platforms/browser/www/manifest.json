@@ -3,9 +3,9 @@
   "display": "standalone",
   "name": "HelloCordova",
   "short_name": "HelloCordova",
-  "version": "io.cordova.hellocordova",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
-  "author": "Apache Cordova Team",
+  "version": "io.covea.insurance",
+  "description": "Covea Insurance App",
+  "author": "Cordova Project Group 2 (it's actually 4 but don't worry about it)",
   "icons": [],
-  "start_url": "index.html"
+  "start_url": "signin.html"
 }
