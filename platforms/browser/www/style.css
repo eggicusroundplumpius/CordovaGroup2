@@ -1,5 +1,7 @@
+ /*Sameehs improvement */ 
+ 
 .pull-hook-content {
-	color: #666;
+	color: #717171;
 	transition: transform .25s ease-in-out;
 }
 .button--material {
@@ -9,29 +11,33 @@
 .card__title,
 .card--material__title {
 	font-size: 20px;
+
 }
 .intro {
 	text-align: center;
 	padding: 0 20px;
 	margin-top: 40px;
+	
 }
 .profile-pic {
 	width: 200px;
-	background-color: #fff;
 	margin: 20px auto 10px;
-	border: 1px solid #999;
 	border-radius: 4px;
+	
 }
 .profile-pic > img {
 	display: block;
 	max-width: 100%;
 }
 #claimborder {
-	padding: 3%;
+	padding: 3%;  /*This is the claim border which will change claim screen*/ 
+	background-color:#77777;
+
 }
 #claimitem {
-	padding: 5%;
+	padding: 5%;  /* This will change the text on claims page after selecting what type of claim is wanted */ 
 	width: 100%;
+	background-color:#717171;
 }
 #Claimssuccess1 {
 	position: absolute; 
@@ -39,13 +45,21 @@
 	right: 20%; 
 	bottom: 5%;
 	padding:3%; 
-	background-color:#ed313d;
+	background-color:#717171;
+}
+#sidemenuitems {
+	color: #eee;
 }
 ons-card {
 	cursor: pointer;
-	color: #333;
+	color: #717171;
 	z-index:-1 !important;
+	background-color:#ed313d;
+
 }
 ons-list-item {
-	color: #444;
+	color: #717171;
+	background-color:#717171;
+	
+	
 }
